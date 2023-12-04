@@ -39,7 +39,9 @@ else
     echo "$message"
 fi
 
-if echo "$message" | grep -qiv "javafx"; then
+if grep -qF "javafx" <<< "$message"; then
+    echo "[ INFO ] error message mentions javafx."
+else
     echo "[ INFO ] error message does not mention javafx."
     echo "[ ERROR ] jar file is not executable."
     exit 1
