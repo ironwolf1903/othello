@@ -8,6 +8,14 @@ public class BasicBoard {
 	protected int[][] board;
 	protected String boardname;
 
+	public BasicBoard() {
+		this.board = new int[8][8];
+		board[3][3] = 2;
+		board[3][4] = 1;
+		board[4][3] = 1;
+		board[4][4] = 2;
+	}
+
 	public String getBoardtype() {
 		return BasicBoard.boardtype;
 	}
