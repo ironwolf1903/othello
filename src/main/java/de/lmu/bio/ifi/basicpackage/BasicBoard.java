@@ -1,5 +1,7 @@
 package de.lmu.bio.ifi.basicpackage;
 
+import java.util.Arrays;
+
 public class BasicBoard {
 	
 	private static String rules 	= "Basic type: No rules for basic type";
@@ -46,6 +48,24 @@ public class BasicBoard {
 	
 	public int[][] getBoard() {
 		return this.board;
+	}
+
+	public BasicBoard cloneBoard(){
+		BasicBoard boardClone = new BasicBoard();
+		boardClone.board = deepCopyBoard(this.board);
+		return boardClone;
+	}
+
+	public static int[][] deepCopyBoard(int[][] originalBoard) {
+		if (originalBoard == null) {
+			return null;
+		}
+
+		int[][] copiedBoard = new int[originalBoard.length][];
+		for (int i = 0; i < originalBoard.length; i++) {
+			copiedBoard[i] = Arrays.copyOf(originalBoard[i], originalBoard[i].length);
+		}
+		return copiedBoard;
 	}
 
 	public String toString() {

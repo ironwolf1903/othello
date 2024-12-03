@@ -9,11 +9,42 @@ import java.util.List;
 public class Othello implements Game{
 
     private GameStatus currentStatus = GameStatus.RUNNING;
+
     private BasicBoard board;
+
     private boolean playerOneTurn = true;
+
+    private int playerOneScore = 0;
+
+    private int playerTwoScore = 0;
+
+
+
+    public void setPlayerOneTurn(boolean playerOneTurn) {
+        this.playerOneTurn = playerOneTurn;
+    }
+
+    public BasicBoard getBoard() {
+        return board;
+    }
+
+    public boolean isPlayerOneTurn() {
+        return playerOneTurn;
+    }
 
     public Othello() {
        board = new BasicBoard();
+    }
+
+    public Othello cloneGame(){
+        Othello clonedGame = new Othello();
+        clonedGame.setBoard(this.board.cloneBoard());
+        clonedGame.setPlayerOneScore(this.getPlayerOneScore());
+        clonedGame.setPlayerTwoScore(this.getPlayerTwoScore());
+        clonedGame.setCurrentStatus(this.getCurrentStatus());
+
+        clonedGame.setPlayerOneTurn(this.isPlayerOneTurn());
+        return clonedGame;
     }
 
     @Override
@@ -29,6 +60,7 @@ public class Othello implements Game{
         }
         Move currentMove = new Move(x,y);
         List<Move> validMoveList = getPossibleMoves(playerOne);
+
         boolean isValid = false;
         for(Move move : validMoveList){
             if(move.x == currentMove.x && move.y == currentMove.y){
@@ -42,6 +74,7 @@ public class Othello implements Game{
         int assignInt = playerOne ? 1 : 2;
         board.getBoard()[y][x] = assignInt;
         flipStones(new Move(x,y),playerOne);
+        gameStatus();
         playerOneTurn = !playerOneTurn;
         return true;
     }
@@ -83,10 +116,98 @@ public class Othello implements Game{
         }
     }
 
-    @Override
-    public GameStatus gameStatus() {
+    public GameStatus getCurrentStatus() {
         return currentStatus;
     }
+
+    public int getPlayerOneScore() {
+        return playerOneScore;
+    }
+
+    public int getPlayerTwoScore() {
+        return playerTwoScore;
+    }
+
+
+
+    public void setCurrentStatus(GameStatus currentStatus) {
+        this.currentStatus = currentStatus;
+    }
+
+    public void setBoard(BasicBoard board) {
+        this.board = board;
+    }
+
+    public void setPlayerOneScore(int playerOneScore) {
+        this.playerOneScore = playerOneScore;
+    }
+
+    public void setPlayerTwoScore(int playerTwoScore) {
+        this.playerTwoScore = playerTwoScore;
+    }
+
+
+
+    @Override
+    public GameStatus gameStatus() {
+
+        int p1Score = 0;
+        int p2Score = 0;
+
+        // Calculate scores for both players by iterating through the board
+        for (int i = 0; i < board.getBoard().length; i++) {
+            for (int j = 0; j < board.getBoard().length; j++) {
+                if (board.getBoard()[i][j] == 1) {
+                    p1Score++;
+                } else if (board.getBoard()[i][j] == 2) {
+                    p2Score++;
+                }
+            }
+        }
+        playerOneScore = p1Score;
+        playerTwoScore = p2Score;
+
+        boolean thisNoLegal = getPossibleMoves(isPlayerOneTurn()).isEmpty();
+        if (thisNoLegal) {
+            this.setPlayerOneTurn(!isPlayerOneTurn());
+            boolean opNoLegal = getPossibleMoves(isPlayerOneTurn()).isEmpty();
+            this.setPlayerOneTurn(!isPlayerOneTurn());
+            if (opNoLegal) {
+                if (playerOneScore == playerTwoScore) {
+                    currentStatus = GameStatus.DRAW;
+                    return currentStatus;
+                } else {
+                    currentStatus = (playerOneScore > playerTwoScore) ? GameStatus.PLAYER_1_WON : GameStatus.PLAYER_2_WON;
+                    return currentStatus;
+                }
+            } else {
+                currentStatus = GameStatus.RUNNING;
+                return currentStatus;
+            }
+        } else {
+            currentStatus = GameStatus.RUNNING;
+            return currentStatus;
+        }
+         // if (previousNoLegal && thisNoLegal) {
+//            if (playerOneScore == playerTwoScore) {
+//                currentStatus = GameStatus.DRAW;
+//            } else {
+//                currentStatus = (playerOneScore > playerTwoScore) ? GameStatus.PLAYER_1_WON : GameStatus.PLAYER_2_WON;
+//            }
+//
+//        } else if (!previousNoLegal && thisNoLegal){
+//            previousNoLegal = true;
+//            currentStatus = GameStatus.RUNNING;
+//        } else if (previousNoLegal && !thisNoLegal) {
+//            previousNoLegal = false;
+//        }
+//        else {
+//            currentStatus = GameStatus.RUNNING;
+//        }
+//        return currentStatus;
+
+    }
+
 
     @Override
     public List<Move> getPossibleMoves(boolean playerOne) {
@@ -158,4 +279,6 @@ public class Othello implements Game{
         }
         return boardAsString.toString();
     }
+
+
 }
