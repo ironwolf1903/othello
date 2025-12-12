@@ -23,7 +23,7 @@ This project was developed as part of a university programming assignment and fo
 A short gameplay demo (GIF or video) is shown below.
 
 
-https://github.com/ironwolf1903/othello/blob/submission/gui/src/main/resources/img/Media1.mp4
+https://github.com/ironwolf1903/othello/blob/submission/gui/src/main/resources/img/Media1.gif
 
 
 
