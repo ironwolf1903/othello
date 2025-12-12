@@ -22,8 +22,9 @@ This project was developed as part of a university programming assignment and fo
 
 A short gameplay demo (GIF or video) is shown below.
 
+![Othello Gameplay Demo](https://github.com/ironwolf1903/othello/blob/submission/gui/src/main/resources/img/Media1.gif)
 
-https://github.com/ironwolf1903/othello/blob/submission/gui/src/main/resources/img/Media1.gif
+
 
 
 
