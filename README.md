@@ -34,7 +34,7 @@ A short gameplay demo (GIF) is shown below.
 
 ```
 src/main/java/de/lmu/bio/ifi
-├── Runner.java              # JavaFX entry point
+├── Runner.java              # Aı configuration tester
 ├── gui
 │   └── OthelloApp.java      # Main GUI application
 ├── game                     # Core game logic (board, rules, moves)
